@@ -1,0 +1,94 @@
+<svg [attr.width]="size" [attr.height]="size">
+  <defs>
+    <linearGradient [attr.id]="gradientId" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" [attr.stop-color]="'#00FF00'" />
+      <stop offset="100%" [attr.stop-color]="'#FF0000'" />
+    </linearGradient>
+  </defs>
+  <path
+    class="full-arc"
+    [attr.d]="drawArc('full')"
+    [attr.stroke]="
+      guageMeterStyles.pathFull.gradientEnable
+        ? gradientUrl
+        : guageMeterStyles.pathFull.stroke
+    "
+    [attr.stroke-width]="guageMeterStyles.pathFull.strokeWidth"
+    [attr.fill]="guageMeterStyles.pathFull.fill"
+  />
+  <path
+    class="gauge-arc"
+    [attr.d]="drawArc('semi')"
+    [attr.stroke]="
+      guageMeterStyles.pathSemi.gradientEnable
+        ? getGradientColors()
+        : guageMeterStyles.pathSemi.stroke
+    "
+    [attr.stroke]="getGradientColors()"
+    [attr.stroke-width]="guageMeterStyles.pathSemi.strokeWidth"
+    [attr.fill]="guageMeterStyles.pathSemi.fill"
+  />
+  <circle
+    [attr.cx]="center"
+    [attr.cy]="center"
+    [attr.r]="guageMeterStyles.needleCircle.r"
+    [attr.stroke]="
+      guageMeterStyles.needleCircle.gradientEnable
+        ? getGradientColors()
+        : guageMeterStyles.needleCircle.stroke
+    "
+    [attr.fill]="
+      guageMeterStyles.needleCircle.gradientEnable
+        ? getGradientColors()
+        : guageMeterStyles.needleCircle.stroke
+    "
+  />
+  <line
+    class="gauge-needle"
+    [attr.x1]="center"
+    [attr.y1]="center"
+    [attr.x2]="calculateNeedleEnd().x"
+    [attr.y2]="calculateNeedleEnd().y"
+    [attr.stroke]="
+      guageMeterStyles.needle.gradientEnable
+        ? getGradientColors()
+        : guageMeterStyles.needle.stroke
+    "
+    [attr.stroke-width]="guageMeterStyles.needle.strokeWidth"
+  />
+  <!-- Small tick and label for min value -->
+  <line
+    [attr.x1]="calculateTickStart(startAngle).x"
+    [attr.y1]="calculateTickStart(startAngle).y"
+    [attr.x2]="calculateTickEnd(startAngle).x"
+    [attr.y2]="calculateTickEnd(startAngle).y"
+    [attr.stroke]="guageMeterStyles.minTick.stroke"
+    [attr.stroke-width]="guageMeterStyles.minTick.strokeWidth"
+  />
+  <text
+    [attr.x]="calculateTickEnd(startAngle).x"
+    [attr.y]="calculateTickEnd(startAngle).y - labelOffset"
+    [attr.stoke]="guageMeterStyles.tickTextMin.stroke"
+    [attr.stroke-width]="guageMeterStyles.tickTextMin.strokeWidth"
+    text-anchor="middle"
+  >
+    {{ config.minValue }}
+  </text>
+  <line
+    [attr.x1]="calculateTickStart(endAngle).x"
+    [attr.y1]="calculateTickStart(endAngle).y"
+    [attr.x2]="calculateTickEnd(endAngle).x"
+    [attr.y2]="calculateTickEnd(endAngle).y"
+    [attr.stroke]="guageMeterStyles.maxTick.stroke"
+    [attr.stroke-width]="guageMeterStyles.maxTick.strokeWidth"
+  />
+  <text
+    [attr.x]="calculateTickEnd(endAngle).x"
+    [attr.y]="calculateTickEnd(endAngle).y - labelOffset"
+    [attr.stoke]="guageMeterStyles.tickTextMax.stroke"
+    [attr.stroke-width]="guageMeterStyles.tickTextMax.strokeWidth"
+    text-anchor="middle"
+  >
+    {{ config.maxValue }}
+  </text>
+</svg>

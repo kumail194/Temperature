@@ -1,0 +1,16 @@
+.gauge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  flex-direction: column
+}
+
+.gauge-background {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 10;
+}
+.flex-item {
+  margin-top: 10px; /* Adjust the value as needed */
+}
